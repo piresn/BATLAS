@@ -28,8 +28,8 @@ shinyUI(
                
                withSpinner(plotOutput('plot'), type = 5),
                
-               tableOutput('table')
-               
+               div(DT::dataTableOutput('table', width = '50%'),
+                   style = "font-size:80%; padding-top:80px;")
         )
       )
     ),

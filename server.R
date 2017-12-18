@@ -55,11 +55,15 @@ shinyServer(function(input, output, session) {
   })
   
   
-  output$table <- renderTable({
+  output$table <- DT::renderDataTable({
+    
     out <- NULL
-    try(out <- round(values$results, 2))
+    try(out <- round(values$results, 3))
     cbind(sample = rownames(out), out)
-  })
+  },
+  options = list(searching = FALSE), rownames = FALSE)#,
+  #digits = 3, spacing = 'xs',
+  #hover = TRUE, rownames = TRUE)
   
   
   output$debug <- renderPrint({

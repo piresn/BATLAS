@@ -1,12 +1,12 @@
 library(CellMix)
 library(ggplot2)
 library(shiny)
-#library(shinyjs)
 library(shinythemes)
 library(shinyBS)
 library(shinycssloaders)
 library(reshape2)
 library(scales)
+library(DT)
 
 
 options(shiny.maxRequestSize = 50*1024^2)
