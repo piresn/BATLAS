@@ -1,10 +1,13 @@
 library(CellMix)
 library(ggplot2)
 library(shiny)
-library(shinyjs)
+#library(shinyjs)
 library(shinythemes)
 library(shinyBS)
 library(shinycssloaders)
+library(reshape2)
+library(scales)
+
 
 options(shiny.maxRequestSize = 50*1024^2)
 
@@ -48,5 +51,24 @@ calc_proportions <- function(x, markers, method = 'DSA') {
   res <- ged(as.matrix(x) + 0.01, markers, method, verbose = FALSE) # add small pseudocount to avoid zero-errors
   scaled.proportions <- scoef(res)
   return(scaled.proportions)
+}
+
+bat_plot <- function(x){
+  x <- data.frame(t(x))
+  x$sample <- rownames(x)
+  x <- melt(x, variable.name = 'fat', value.name = 'Proportion')
+  x$fat <- factor(x$fat, levels = c('brown', 'white'), ordered = TRUE)
+  
+  ggplot(x, aes(sample, Proportion, fill = fat)) +
+    geom_hline(yintercept = 0.5, color = 'grey60') +
+    geom_col(position = position_stack(reverse = TRUE),
+             color = 'grey70', width = 0.8) +
+    scale_fill_manual(values = c('sienna4', 'snow'), guide = FALSE) +
+    scale_y_continuous(breaks = seq(0, 1, 0.25), minor_breaks = seq(0, 1, 0.05),
+                       labels = percent) +
+    coord_flip() +
+    labs(x = NULL, y = 'Brown percentage estimate') +
+    theme_minimal() + 
+    theme(panel.grid.major.y = element_blank())
 }
 

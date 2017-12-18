@@ -52,14 +52,17 @@ shinyServer(function(input, output, session) {
       
       results <- calc_proportions(values$dataset, markers.list[[values$species]])
       
-      barplot(results, horiz = TRUE, las = 2)
+      #barplot(results, horiz = TRUE, las = 2)
+      plot(bat_plot(results))
+
+      
       
     } else{}
     
   })
   
   output$debug <- renderPrint({
-    values$status
+    #str(calc_proportions(values$dataset, markers.list[[values$species]]))
   })
   
   
