@@ -58,16 +58,17 @@ calc_proportions <- function(x, markers, method = 'DSA') {
 
 bat_plot <- function(x){
 
-  x$sample <- rownames(x)
+  x$sample <- factor(rownames(x), levels = rev(rownames(x)))
   x <- melt(x, variable.name = 'fat', value.name = 'Proportion')
   x$fat <- factor(x$fat, levels = c('brown', 'white'), ordered = TRUE)
   
   ggplot(x, aes(sample, Proportion, fill = fat)) +
     geom_hline(yintercept = 0.5, color = 'grey60') +
     geom_col(position = position_stack(reverse = TRUE),
-             color = 'grey70', width = 0.8) +
+             color = 'grey85', width = 0.8, alpha = 0.95, lwd = 0.4) +
     scale_fill_manual(values = c('sienna4', 'snow'), guide = FALSE) +
     scale_y_continuous(breaks = seq(0, 1, 0.25), minor_breaks = seq(0, 1, 0.05),
+                       expand = c(0,0),
                        labels = percent) +
     coord_flip() +
     labs(x = NULL, y = 'Brown percentage estimate') +

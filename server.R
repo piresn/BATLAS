@@ -49,6 +49,7 @@ shinyServer(function(input, output, session) {
                                          markers = markers.list[[values$species]],
                                          method = 'DSA')
       
+      a <- values$results; save(a, file = 'a18Dec.Rdata')
       plot(bat_plot(values$results))
       
     }
@@ -56,14 +57,11 @@ shinyServer(function(input, output, session) {
   
   
   output$table <- DT::renderDataTable({
-    
     out <- NULL
     try(out <- round(values$results, 3))
     cbind(sample = rownames(out), out)
   },
-  options = list(searching = FALSE), rownames = FALSE)#,
-  #digits = 3, spacing = 'xs',
-  #hover = TRUE, rownames = TRUE)
+  options = list(searching = FALSE), rownames = FALSE)
   
   
   output$debug <- renderPrint({
