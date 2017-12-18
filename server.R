@@ -3,48 +3,49 @@ shinyServer(function(input, output, session) {
   
   values <- reactiveValues(dataset = NULL,
                            species = NULL,
+                           status = '',
                            debug = 'None')
   
   
   ### User data validation
   observeEvent(input$userdata,{
     
-    file_upload <- input$userdata
+    values$dataset <- NULL
+    val <- validation(input$userdata)
     
-    a1 <- NULL; try(a1 <- read.table(file_upload$datapath, sep="\t", header=T, row.names=1))
+    values$status <- val$status
     
-    values$debug <- colnames(a1)
-    
-    if(!is.null(a1)){
-      all_human_ok <- all(unlist(markers.list[['human']]) %in% rownames(a1))
-      all_mouse_ok <- all(unlist(markers.list[['mouse']]) %in% rownames(a1))
-      
-      if(all_human_ok | all_mouse_ok){
-        values$dataset <- a1
-        
-        if(all_human_ok){ values$species <- 'human'} else{ values$species <- 'mouse' }
-        
-      }
+    if(val$status == 'OK'){
+      values$dataset <- val$dataset
+      values$species <- val$species
     }
   })
   
   ### Download example
   output$downloadExample <- downloadHandler(filename = 'mouse_example.txt',
                                             content = function(file){file.copy('data/RPKM_319.txt', file)})
-
+  
   
   ### Plot
   
-  output$empty <- renderUI({
-    
+  output$status <- renderUI({
+
     if(is.null(values$dataset)) {
-      
-      HTML('<p style="text-align:center; padding-top:30px; color:silver;">Load a file with mouse or human RPKMs.</p>')
-      
-      }
-    
+
+      HTML(paste0('<p style="color:red; padding-top:1px;">',
+                    values$status,
+                    '</p>'))
+    }
   })
   
+  # observeEvent(values$status, {
+  #   if(values$status!='OK'){
+  #     #shinyjs::info("Thank you!")
+  #     #showModal(modalDialog('bla'))
+  #     showNotification(values$status, duration = NULL, type = 'error')
+  #   }
+  # })
+
   output$plot <- renderPlot({
     
     if(!is.null(values$dataset)){
@@ -58,7 +59,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$debug <- renderPrint({
-    values$debug
+    values$status
   })
   
   

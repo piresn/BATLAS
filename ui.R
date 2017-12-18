@@ -7,21 +7,25 @@ shinyUI(
       
       fluidRow(
         #shinythemes::themeSelector(),
-        verbatimTextOutput('debug'),
+        #verbatimTextOutput('debug'),
         
         column(3,
                
                fixedRow(
                  
-                 fileInput("userdata", "Load expression data"),
+                 conditionalPanel(
+                   
+                   condition = "values.status != 'OK'",
+                   htmlOutput('status')
+                 ),
                  
+                 fileInput("userdata", "Load expression data:"),
+
                  downloadLink("downloadExample", "Download an example", icon('file'))
                  
                )
         ),
         column(9,
-               
-               htmlOutput('empty'),
                
                withSpinner(plotOutput('plot'), type = 5)
                

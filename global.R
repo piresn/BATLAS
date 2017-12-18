@@ -1,6 +1,7 @@
 library(CellMix)
 library(ggplot2)
 library(shiny)
+library(shinyjs)
 library(shinythemes)
 library(shinyBS)
 library(shinycssloaders)
@@ -33,6 +34,8 @@ markers.list[['human']] <- MarkerList(list(brown = as.character(brown.markers$hu
 #################################################
 ### functions
 #################################################
+
+source('validation.R')
 
 calc_proportions <- function(x, markers, method = 'DSA') {
   
