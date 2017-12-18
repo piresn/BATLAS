@@ -14,7 +14,6 @@ shinyUI(
                fixedRow(
                  
                  conditionalPanel(
-                   
                    condition = "values.status != 'OK'",
                    htmlOutput('status')
                  ),
