@@ -22,8 +22,16 @@ shinyUI(
 
                  downloadLink("downloadExample", "Download an example", icon('file'))
                  
+                 ### Optional: let user select different methods
+                 # tags$hr(),
+                 # selectInput('method', 'Method', choices = c('DSA', 'ssKL', 'ssFrobenius', 'meanProfile'))
+
+                 
                )
         ),
+        
+        ##############################################################
+        ##############################################################
         column(9,
                
                withSpinner(plotOutput('plot'), type = 5),
@@ -33,6 +41,10 @@ shinyUI(
         )
       )
     ),
+    
+    ##############################################################
+    ##############################################################
+    
     tabPanel('Help',
              includeMarkdown("data/help.md")
     )

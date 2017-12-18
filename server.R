@@ -1,6 +1,5 @@
 shinyServer(function(input, output, session) {
   
-  
   values <- reactiveValues(dataset = NULL,
                            species = NULL,
                            status = '',
@@ -8,39 +7,41 @@ shinyServer(function(input, output, session) {
                            debug = 'None')
   
   
-  ### User data validation
+  ##############################################################
+  # User data validation
+  ##############################################################
+  
   observeEvent(input$userdata,{
     
+    # reset previous values
     values$dataset <- NULL
+    values$species <- NULL
+    values$results <- NULL
     
+    # validate user input
     val <- validation(input$userdata)
     
+    # update data
     values$status <- val$status
     if(val$status == 'OK'){
       values$dataset <- val$dataset
       values$species <- val$species
-      values$results <- NULL
     }
   })
   
+  
+  ### Display informative error message upon invalidation user input
   
   output$status <- renderUI({
-    
-    if(is.null(values$dataset)) {
-      
+    if(is.null(values$dataset)){
       HTML(paste0('<p style="color:red; padding-top:1px;">',
-                  values$status,
-                  '</p>'))
+                  values$status, '</p>'))
     }
   })
   
-  
-  ### Download example
-  output$downloadExample <- downloadHandler(filename = 'mouse_example.txt',
-                                            content = function(file){file.copy('data/RPKM_319.txt', file)})
-  
-  
-  
+  ##############################################################
+  # Plot
+  ##############################################################
   output$plot <- renderPlot({
     
     if(!is.null(values$dataset)){
@@ -55,6 +56,9 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  ##############################################################
+  # Table
+  ##############################################################
   
   output$table <- DT::renderDataTable({
     out <- NULL
@@ -63,6 +67,16 @@ shinyServer(function(input, output, session) {
   },
   options = list(searching = FALSE), rownames = FALSE)
   
+  
+  ##############################################################
+  ### Download example
+  ##############################################################
+  
+  output$downloadExample <- downloadHandler(filename = 'mouse_example.txt',
+                                            content = function(file){file.copy('data/RPKM_319.txt', file)})
+  
+  
+  ##############################################################
   
   output$debug <- renderPrint({
     head(values$results)
