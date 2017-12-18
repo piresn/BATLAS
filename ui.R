@@ -26,7 +26,9 @@ shinyUI(
         ),
         column(9,
                
-               withSpinner(plotOutput('plot'), type = 5)
+               withSpinner(plotOutput('plot'), type = 5),
+               
+               tableOutput('table')
                
         )
       )

@@ -55,9 +55,15 @@ shinyServer(function(input, output, session) {
   })
   
   
+  output$table <- renderTable({
+    out <- NULL
+    try(out <- round(values$results, 2))
+    cbind(sample = rownames(out), out)
+  })
+  
   
   output$debug <- renderPrint({
-    #str(calc_proportions(values$dataset, markers.list[[values$species]]))
+    head(values$results)
   })
   
   

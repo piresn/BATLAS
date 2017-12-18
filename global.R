@@ -48,13 +48,16 @@ calc_proportions <- function(x, markers, method = 'DSA') {
   ## ssFrobenius = semi-supervised NMF for euclid distance
   ## meanProfile = proportion proxies
   
-  res <- ged(as.matrix(x) + 0.01, markers, method, verbose = FALSE) # add small pseudocount to avoid zero-errors
-  scaled.proportions <- scoef(res)
-  return(scaled.proportions)
+  x <- ged(as.matrix(x) + 0.01, markers, method, verbose = FALSE) # add small pseudocount to avoid zero-errors
+  x <- scoef(x)
+  
+  x <- data.frame(t(x))
+  
+  return(x)
 }
 
 bat_plot <- function(x){
-  x <- data.frame(t(x))
+
   x$sample <- rownames(x)
   x <- melt(x, variable.name = 'fat', value.name = 'Proportion')
   x$fat <- factor(x$fat, levels = c('brown', 'white'), ordered = TRUE)
