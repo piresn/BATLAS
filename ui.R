@@ -22,11 +22,9 @@ shinyUI(
 
                  downloadLink("downloadExample", "Download an example", icon('file'))
                  
-                 ### Optional: let user select different methods
+                 ### Optional: let user select different methods. Need to then call input$method on calc_proportions function
                  # tags$hr(),
                  # selectInput('method', 'Method', choices = c('DSA', 'ssKL', 'ssFrobenius', 'meanProfile'))
-
-                 
                )
         ),
         

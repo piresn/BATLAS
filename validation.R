@@ -25,16 +25,22 @@ validation <- function(x){
     return(out)
   }
   
+  ### test if gene names are in ensembl format
+  if(length(grep('ENS.+\\d{11}', rownames(userfile), perl = TRUE)) < nrow(userfile)){
+    out$status <- 'Gene names (first column) must be in ENSEMBL format (E.g. ENSG00000109424).'
+    return(out)
+  }
+  
   ### test if all species gene annotations are ok
   spp <- val_gene_annotations(userfile)
   if(spp == 'unknown'){
-    out$status <- 'Invalid gene names.'
+    out$status <- 'Incomplete gene list: there are not enough genes available to determine brown content.'
     return(out)
   }
   
   ### test if all values are numeric
   if(!all(apply(userfile, 1, is.numeric))){
-    out$status <- 'Invalid expression values (must be numeric, use dots as decimal separators).'
+    out$status <- 'Invalid expression values: (they must be numeric and use dots as decimal separators).'
     return(out)
   }
   
@@ -56,8 +62,8 @@ validation <- function(x){
 
 
 #####################################
-# test <- list(datapath = '~/Desktop/mouse_example2.txt')
-# test_res <- validation(test)
-# str(test_res)
-# 
-# test2 <- read.table(test$datapath, sep="\t", header=T, row.names=1)
+test <- list(datapath = '~/Desktop/mouse_example2.txt')
+test_res <- validation(test)
+str(test_res)
+
+test2 <- read.table(test$datapath, sep="\t", header=T, row.names=1)
