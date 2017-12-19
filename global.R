@@ -1,3 +1,7 @@
+### install CellMix first time
+# source('http://www.bioconductor.org/biocLite.R')
+# biocLite('CellMix', siteRepos = 'http://web.cbio.uct.ac.za/~renaud/CRAN', type='both')
+
 library(CellMix)
 library(ggplot2)
 library(shiny)
