@@ -1,9 +1,9 @@
 shinyUI(
   navbarPage(
-    'Brown fat cell deconvolution', theme = shinytheme("lumen"),
+    'BATLAS webtool', theme = shinytheme("sandstone"),
     
     tabPanel(
-      "Analysis",
+      "Analysis ", icon = icon('bar-chart'),
       
       fluidPage(
         
@@ -11,9 +11,12 @@ shinyUI(
           #shinythemes::themeSelector(),
           #verbatimTextOutput('debug'),
           
+          includeMarkdown("data/intro.md"),
+
           column(3,
                  
                  fixedRow(
+                   
                    
                    conditionalPanel(
                      condition = "values.status != 'OK'",
@@ -22,7 +25,9 @@ shinyUI(
                    
                    fileInput("userdata", "Load expression data:"),
                    
-                   downloadLink("downloadExample", "Download an example dataset", icon = icon('file'))
+                   hr(),
+                   
+                   actionLink("downloadExample", "Download example dataset", icon = icon('cloud-download'))
                    
                    ### Optional: let user select different methods. Need to then call input$method on calc_proportions function
                    # tags$hr(),
@@ -32,12 +37,15 @@ shinyUI(
           
           ##############################################################
           ##############################################################
-          column(9,
+          
+          column(9, align = 'center',
 
-                 withSpinner(plotOutput('plot'), type = 5),
+                 withSpinner(plotOutput('plot', width = '80%'), type = 5),
                  
-                 div(DT::dataTableOutput('table', width = '50%'),
-                     style = "font-size:80%; padding-top:80px;")
+                 hr(),
+                 
+                 div(DT::dataTableOutput('table', width = '70%'),
+                     style = "font-size:90%; padding:40px;")
           )
         )
       )
@@ -46,17 +54,19 @@ shinyUI(
     ##############################################################
     ##############################################################
     
-    tabPanel('Help',
+    tabPanel('Help', #icon = icon('life-saver'),
              includeMarkdown("data/help.md")
     ),
     
-    tags$footer(HTML('<a href="http://www.tnb.ethz.ch/" target="_blank" style = "color:grey;">Wolfrum lab - ETH Zürich</a>  | 2018'),
-                align = "right",
-                style = "position:absolute;
-                bottom:0;
+    tags$footer(HTML('<a href="http://www.tnb.ethz.ch/" target="_blank" style = "color:darkgray;">Wolfrum lab - ETH Zürich</a>  | 2018'),
+                align = "center",
+                style = "position: relative;
+                line-height: 20px;
                 font-size:12px;
-                padding:10px;
-                color:grey;
-                width:50%;")
+                margin-bottom:10px;
+                margin-color: white;
+                background-color: white;
+                color:darkgray;
+                width:100%;")
   )
 )
