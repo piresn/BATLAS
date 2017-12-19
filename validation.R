@@ -19,33 +19,34 @@ validation <- function(x){
   userfile <- NULL; try(userfile <- read.table(x$datapath, sep="\t", header=T, row.names=1))
   
   
-  ### test if file could be imported using read.table
+  ### check if file could be imported using read.table
   if(is.null(userfile)){
-    out$status <- 'Invalid file.'
+    out$status <- 'Invalid file. RPKM values must be given as a tab-delimited file, with sample names on the first row and gene IDs in the first column.'
     return(out)
   }
   
-  ### test if gene names are in ensembl format
+  ### check if gene names are in ensembl format
   if(length(grep('ENS.+\\d{11}', rownames(userfile), perl = TRUE)) < nrow(userfile)){
     out$status <- 'Gene names (first column) must be in ENSEMBL format (E.g. ENSG00000109424).'
     return(out)
   }
   
-  ### test if all species gene annotations are ok
+
+  ### check if all required gene annotations are ok (and determine species)
   spp <- val_gene_annotations(userfile)
   if(spp == 'unknown'){
     out$status <- 'Incomplete gene list: there are not enough genes available to determine brown content.'
     return(out)
   }
   
-  ### test if all values are numeric
+  ### check if all values are numeric
   if(!all(apply(userfile, 1, is.numeric))){
     out$status <- 'Invalid expression values: (they must be numeric and use dots as decimal separators).'
     return(out)
   }
   
   
-  ### test if there are missing values
+  ### check if there are missing values
   if(sum(apply(userfile, 1, is.na)) > 0) {
     out$status <- 'Invalid input file: missing expression values.'
     return(out)
@@ -59,11 +60,3 @@ validation <- function(x){
   
   return(out)
 }
-
-
-#####################################
-test <- list(datapath = '~/Desktop/mouse_example2.txt')
-test_res <- validation(test)
-str(test_res)
-
-test2 <- read.table(test$datapath, sep="\t", header=T, row.names=1)

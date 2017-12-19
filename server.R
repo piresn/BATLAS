@@ -50,9 +50,7 @@ shinyServer(function(input, output, session) {
                                          markers = markers.list[[values$species]],
                                          method = 'DSA')
       
-      a <- values$results; save(a, file = 'a18Dec.Rdata')
-      plot(bat_plot(values$results))
-      
+      bat_plot(values$results)
     }
   })
   
