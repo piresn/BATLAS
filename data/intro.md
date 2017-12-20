@@ -1,1 +1,1 @@
-The BATLAS webtool uses a deconvolution algorithm to estimate the percentage of brown cells in a tissue using RNA-seq data from whole tissues.
+The BATLAS webtool uses a deconvolution algorithm to estimate the percentage of brown cells in a human or mouse tissue using RNA-seq data.

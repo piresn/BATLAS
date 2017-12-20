@@ -27,7 +27,7 @@ validation <- function(x){
   
   ### check if gene names are in ensembl format
   if(length(grep('ENS.+\\d{11}', rownames(userfile), perl = TRUE)) < nrow(userfile)){
-    out$status <- 'Gene names (first column) must be in ENSEMBL format (E.g. ENSG00000109424).'
+    out$status <- 'Gene names (first column) must be in ENSEMBL format (human or mouse, e.g. ENSG00000109424).'
     return(out)
   }
   
