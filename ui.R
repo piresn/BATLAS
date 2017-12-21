@@ -26,7 +26,7 @@ shinyUI(
                    
                    hr(),
                    
-                   div(HTML('<a href="https://raw.githubusercontent.com/piresn/BATLAS/master/data/mouseRPKM.txt">
+                   div(HTML('<a href="https://raw.githubusercontent.com/piresn/BATLAS/master/data/mouseRPKM.txt" download>
                             Download example dataset</a>'))
                    
                    ### Optional: let user select different methods. Need to then call input$method on calc_proportions function
