@@ -8,7 +8,6 @@ shinyUI(
       fluidPage(
         
         fluidRow(
-          #shinythemes::themeSelector(),
           #verbatimTextOutput('debug'),
           
           includeMarkdown("data/intro.md"),
@@ -27,7 +26,8 @@ shinyUI(
                    
                    hr(),
                    
-                   actionLink("downloadExample", "Download example dataset", icon = icon('cloud-download'))
+                   div(HTML('<a href="https://raw.githubusercontent.com/piresn/BATLAS/master/data/mouseRPKM.txt">
+                            Download example dataset</a>'))
                    
                    ### Optional: let user select different methods. Need to then call input$method on calc_proportions function
                    # tags$hr(),

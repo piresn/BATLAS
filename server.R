@@ -67,14 +67,6 @@ shinyServer(function(input, output, session) {
   
   
   ##############################################################
-  ### Download example
-  ##############################################################
-  
-  output$downloadExample <- downloadHandler(filename = 'mouse_example.txt',
-                                            content = function(file){file.copy('data/RPKM_319.txt', file)})
-  
-  
-  ##############################################################
   
   output$debug <- renderPrint({
     head(values$results)
