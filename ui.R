@@ -27,11 +27,11 @@ shinyUI(
                    hr(),
                    
                    div(HTML('<a href="https://raw.githubusercontent.com/piresn/BATLAS/master/data/mouseRPKM.txt" download>
-                            Download example dataset</a>'))
+                            Download example dataset</a>')),
                    
                    ### Optional: let user select different methods. Need to then call input$method on calc_proportions function
-                   # tags$hr(),
-                   # selectInput('method', 'Method', choices = c('DSA', 'ssKL', 'ssFrobenius', 'meanProfile'))
+                   tags$hr(),
+                   selectInput('method', 'Method', choices = c('DSA', 'ssKL', 'ssFrobenius', 'meanProfile'))
                  )
           ),
           

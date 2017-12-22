@@ -48,7 +48,7 @@ shinyServer(function(input, output, session) {
       
       values$results <- calc_proportions(x = values$dataset,
                                          markers = markers.list[[values$species]],
-                                         method = 'DSA')
+                                         method = input$method)
       
       bat_plot(values$results)
     }
