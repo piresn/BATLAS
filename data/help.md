@@ -3,7 +3,7 @@
 
 The BATLAS web app will take in a gene expression matrix of samples and genes, and estimate the fraction of brown adipocytes per each sample.
 
-The estimations of brown percentages are done using Digital Sorting Algorithm from the [CellMix package](https://web.cbio.uct.ac.za/~renaud/CRAN/web/CellMix/) in combination with the brown and white markers from our publication (Aliki et al, in submission).
+The estimations of brown percentages are done using Digital Sorting Algorithm from the [CellMix package](https://web.cbio.uct.ac.za/~renaud/CRAN/web/CellMix/) in combination with the brown and white markers from our publication (Perdikari et al, in submission).
 
 ## Input requirements
 
